@@ -1,4 +1,4 @@
-import { express } from 'express';
+import express from 'express';
 import router from './routes';
 
 const port = process.env.PORT || 5000;
@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', router);
 
 app.listen(port, host, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
 
 export default app;
