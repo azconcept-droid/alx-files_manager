@@ -9,4 +9,4 @@ router.get('/stats', AppController.getStats);
 
 router.post('/users', UsersController.postNew);
 
-export default router
+export default router;
