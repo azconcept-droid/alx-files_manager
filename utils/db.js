@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 class DBClient {
   constructor() {
@@ -27,6 +27,11 @@ class DBClient {
 
   async nbFiles() {
     return this.fileCollection.countDocuments();
+  }
+
+  async findUserById(id) {
+    const _id = new ObjectId(id);
+    return this.userCollection.findOne({ _id });
   }
 }
 

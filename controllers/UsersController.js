@@ -7,9 +7,9 @@ export default class UsersController {
     if (!email) return res.status(400).json({ error: 'Missing email' });
     if (!password) return res.status(400).json({ error: 'Missing password' });
 
-    if (await dbClient.userCollection.findOne({ email })) {
-      return res.status(400).json({ error: 'Already exist' });
-    }
+    const old_user = await dbClient.userCollection.findOne({ email });
+
+    if (old_user) return res.status(400).json({ error: 'Already exist' });
 
     const user = await dbClient.userCollection.insertOne({
       email,
@@ -17,5 +17,13 @@ export default class UsersController {
     });
 
     return res.status(201).json({ id: user.insertedId, email });
+  }
+
+  static async getMe(req, res) {
+    const old_user = await dbClient.findUserById(req.userId);
+
+    if (!old_user) return res.status(401).json({ error: 'Unauthorized' });
+
+    return res.status(200).json({ id: old_user._id, email: old_user.email });
   }
 }
